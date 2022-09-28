@@ -42,13 +42,14 @@ jobs:
       uses: docker/setup-buildx-action@v2
 
     - name: Build and save
-      uses: docker/build-push-action@v3
-      with:
-        context: .
-        push: false
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}   
-        load: true
+      run: docker build . -t test:test
+#       uses: docker/build-push-action@v3
+#       with:
+#         context: .
+#         push: false
+#         tags: ${{ steps.meta.outputs.tags }}
+#         labels: ${{ steps.meta.outputs.labels }}   
+#         load: true
 
     - name: Get the New Scanner
       run: curl -LO "https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/$(curl -L -s https://download.sysdig.com/scanning/sysdig-cli-scanner/latest_version.txt)/linux/amd64/sysdig-cli-scanner"
@@ -59,7 +60,7 @@ jobs:
     - name: Scan Image with New Scanner
       env:
         SECURE_API_TOKEN: ${{ secrets.SECURE_API_TOKEN }}
-      run: ./sysdig-cli-scanner --apiurl ${{ env.SYSDIG_SECURE_ENDPOINT }} ${{ steps.meta.outputs.tags }}
+      run: ./sysdig-cli-scanner --apiurl ${{ env.SYSDIG_SECURE_ENDPOINT }} test:test
 
 
 
