@@ -28,7 +28,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3
       with:
-        images: ${{ env.APP_NAME }}
+        images: ${{ env.IMAGE_NAME }}
         tags: |
           type=raw,priority=100,enable=${{ github.event_name == 'push' }},value=${{ steps.get_version.outputs.VERSION }}
         labels: |
