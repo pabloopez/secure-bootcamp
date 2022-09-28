@@ -44,8 +44,10 @@ jobs:
     - name: Build and save
       uses: docker/build-push-action@v3
       with:
-        context: ${{ env.DOCKERFILE_CONTEXT }}
-        tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        context: .
+        push: false
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}   
         load: true
 
     - name: Get the New Scanner
